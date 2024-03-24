@@ -1,6 +1,6 @@
 # QTConsoleFileManager
 
-# Task Description
+## Task Description
 
 Write a console-based program that monitors selected files and reports changes in their state.
 
