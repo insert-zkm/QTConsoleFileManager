@@ -20,3 +20,6 @@ There are several scenarios for the observed file:
 When a change in the state of the observed file occurs (an event occurs), the corresponding message should be displayed on the screen.
 
 In this implementation, we use the signal-slot connection mechanism to ensure the handling of the observed file change events.
+
+## Test cases
+- check if tracking file contains only once
