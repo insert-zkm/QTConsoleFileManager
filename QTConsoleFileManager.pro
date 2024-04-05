@@ -9,8 +9,10 @@ CONFIG -= app_bundle
 
 SOURCES += \
         file.cpp \
+        filemanager.cpp \
         logger.cpp \
-        main.cpp
+        main.cpp \
+        print.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -19,7 +21,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     file.h \
-    logger.h
+    filemanager.h \
+    logger.h \
+    print.h
 
 DISTFILES += \
-    README.md
+    README.md \
+    UML/instance.puml

@@ -23,3 +23,6 @@ In this implementation, we use the signal-slot connection mechanism to ensure th
 
 ## Test cases
 - check if tracking file contains only once
+
+## UML of lab
+![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/insert-zkm/QTConsoleFileManager/dev/UML/instance.puml)

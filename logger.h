@@ -1,18 +1,14 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <QString>
 
 class Logger
 {
-    QString m_logger_file;
+private:
+    explicit Logger(const Logger&);
+    void operator=(const Logger&);
 public:
-    Logger(const QString& logger_file);
-};
-
-class ConsoleDisplay {
-public:
-    void display(QString& messege) const;
+    Logger();
 };
 
 #endif // LOGGER_H
