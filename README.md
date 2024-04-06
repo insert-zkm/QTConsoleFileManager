@@ -26,7 +26,7 @@ In this implementation, we use the signal-slot connection mechanism to ensure th
 
 ## UML 
 ### Class Diagram
-![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/insert-zkm/QTConsoleFileManager/dev/UML/instance.puml)
+![Class Diagram](http://plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/insert-zkm/QTConsoleFileManager/dev/UML/instance.puml)
 
 ### Signal/Slot Diagram
 ![Class Diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/insert-zkm/QTConsoleFileManager/dev/UML/signal_slot.puml)
