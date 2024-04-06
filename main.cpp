@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <QTimer>
 #include <future>
-#include "print.h"
+#include "consolewritter.h"
 
 #include "filemanager.h"
 

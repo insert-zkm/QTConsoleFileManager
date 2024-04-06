@@ -6,14 +6,17 @@
 #include <QTimer>
 #include <QTextStream>
 
+#include "consolewritter.h"
 #include "file.h"
-#include "print.h"
+#include "filestate.h"
 
 class FileManager : public QObject {
     Q_OBJECT;
 protected:
     QVector<File> m_files;
     QTimer* timer;
+
+    Console console;
 
 public:
     FileManager();
@@ -32,7 +35,6 @@ signals:
 
 public slots:
     void check_files();
-    void handle_update(const FileState& state, const File& file) const;
 
 };
 

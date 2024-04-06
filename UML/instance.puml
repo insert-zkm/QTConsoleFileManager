@@ -1,11 +1,56 @@
 @startuml
-Instance <|-- VulkanRootObject
+skinparam classAttributeIconSize 0
 
-class Instance {
-    -- Contructors & destructors --
-    - Instance()
+class Console {
+    + print(QString) : void
 
-    -- Public methods --
-    + Initialize() : bool
+    -- slots --
+    + printFileState(FileState, File) : void
 }
+
+class File {
+    -- fields --
+    # qint m_old_size
+    # bool m_old_existance
+
+    -- methods --
+    + File()
+    + File(QString)
+    + update_and_get_state() : FileState
+    + operator==(File) const : bool
+}
+
+class FileTracker {
+    -- fields --
+    # QVector<File> m_files
+    # QTimer* timer
+    # Console console
+
+    -- methods --
+    + track_file(QString) : void
+    + untrack_file(QString) : void
+    + start_tracking(int) const : void
+    + stop_tracking() const : void
+    + show_tacking_files() const : void
+
+    -- signals --
+    updated(FileState, File) const : void
+
+    -- slots --
+    check_files() : void
+}
+
+enum State {
+    STABLE,
+    RESIZED,
+    DELETED,
+    CREATED
+}
+
+struct FileState {
+    + State state
+    + QDateTime updated_time
+}
+
+
 @enduml

@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+
+map QTimer {
+   timeout=>SIGNAL
+}
+
+map FileTracker {
+    updated=>SIGNAL
+    check_files=>SLOT
+}
+
+map Console {
+    printFileState=>SLOT
+}
+
+map Logger {
+    log_messege=>SLOT
+}
+
+QTimer::timeout --> FileTracker::check_files
+FileTracker::updated --> Console::printFileState
+FileTracker::updated --> Logger::log_messege
+@enduml

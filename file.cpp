@@ -6,36 +6,32 @@ File::File(const QString& file_path) : QFileInfo(file_path) {
 }
 
 FileState File::update_and_get_state() {
-    FileState state = {
-        m_old_existance,
-        false,
-        false,
-        m_old_size,
+    FileState fs = {
+        State::STABLE,
         lastModified()
     };
     this->refresh();
 
     if(m_old_size != this->size()) {
-        state.is_size_changed = true;
-        state.size = this->size();
-        state.updated_time = lastModified();
+        fs.state = State::RESIZED;
+        fs.updated_time = lastModified();
 
-        m_old_size = state.size;
+        m_old_size = this->size();
     }
 
     if(m_old_existance != this->exists()) {
-        state.is_existance_changed = true;
-        state.exists = this->exists();
-        if(!state.exists) {
-            state.updated_time = QDateTime::currentDateTime();
+        if(this->exists()) {
+            fs.state = State::CREATED;
+            fs.updated_time = lastModified();
         } else {
-            state.updated_time = lastModified();
+            fs.state = State::DELETED;
+            fs.updated_time = QDateTime::currentDateTime();
         }
 
-        m_old_existance = state.exists;
+        m_old_existance = this->exists();
     }
 
-    return state;
+    return fs;
 }
 
 bool File::operator==(const File &rhs) const {

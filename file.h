@@ -5,13 +5,7 @@
 #include <QDateTime>
 #include <QFileInfo>
 
-struct FileState {
-    bool exists;
-    bool is_size_changed;
-    bool is_existance_changed;
-    qint64 size;
-    QDateTime updated_time;
-};
+#include "filestate.h"
 
 class File : public QFileInfo
 {

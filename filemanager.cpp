@@ -4,7 +4,7 @@
 FileManager::FileManager() {
     timer = new QTimer(this);
 
-    connect(this, &FileManager::updated, this, &FileManager::handle_update);
+    connect(this, &FileManager::updated, &console, &Console::printFileState);
     connect(timer, &QTimer::timeout, this, &FileManager::check_files);
 }
 
@@ -22,8 +22,7 @@ FileManager::FileManager(const QVector<QString>& files_path) : FileManager() {
 }
 
 FileManager::~FileManager() {
-    print() << "~FileManager\n";
-    print().flush();
+    console.print(("~FileManager"));
 }
 
 void FileManager::track_file(const QString &file_path) {
@@ -54,31 +53,21 @@ void FileManager::stop_tracking() const {
 }
 
 void FileManager::show_tracking_files() const {
-    print() << "Tracking files: " << m_files.size() << '\n';
+    console.print("Tracking files: " + QString::number(m_files.size()));
+    QString files_list;
     for(int i = 0; i < m_files.size(); i++) {
-        print() << "\t " << i << ". " << m_files[i].absoluteFilePath() << '\n';
+        files_list += "\t " + QString::number(i) + ". " + m_files[i].absoluteFilePath() + '\n';
     }
-    print().flush();
+    console.print(files_list);
 }
 
 void FileManager::check_files() {
     for(int i = 0; i < m_files.size(); i++) {
-        FileState state = m_files[i].update_and_get_state();
-        if(state.is_size_changed || state.is_existance_changed) {
-            emit updated(state, m_files[i]);
+        FileState fs = m_files[i].update_and_get_state();
+        if(fs.state != State::STABLE) {
+            emit updated(fs, m_files[i]);
         }
     }
-    print().flush();
-}
-
-void FileManager::handle_update(const FileState& state, const File& file) const {
-    QString messege;
-    messege = QObject::tr("Size: %1 B,\texists: %2,\tupdated time: %3,\tfile: %4\n")
-                .arg(state.size)
-                .arg((state.exists ? "true" : "false"))
-                .arg(state.updated_time.toString("dd.MM.yy hh:mm:ss.zzz"))
-                .arg(file.absoluteFilePath());
-    print() << messege;
 }
 
 

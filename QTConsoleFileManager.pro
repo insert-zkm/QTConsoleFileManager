@@ -8,11 +8,11 @@ CONFIG -= app_bundle
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        consolewritter.cpp \
         file.cpp \
         filemanager.cpp \
         logger.cpp \
-        main.cpp \
-        print.cpp
+        main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -20,11 +20,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    consolewritter.h \
     file.h \
     filemanager.h \
-    logger.h \
-    print.h
+    filestate.h \
+    logger.h
 
 DISTFILES += \
     README.md \
-    UML/instance.puml
+    UML/instance.puml \
+    UML/signal_slot.puml
