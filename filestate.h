@@ -4,10 +4,11 @@
 #include <QDateTime>
 
 enum State {
-    STABLE,
+    UPTODATE,
     RESIZED,
     DELETED,
-    CREATED
+    CREATED,
+    RESTORED
 };
 
 struct FileState {
@@ -17,11 +18,12 @@ struct FileState {
 
 inline QString get_state_text(const State& st) {
     switch (st) {
-        case STABLE:  return "STABLE ";
-        case RESIZED: return "RESIZED";
-        case DELETED: return "DELETED";
-        case CREATED: return "CREATED";
-        default:      return "";
+    case UPTODATE:  return "UPTODATE";
+    case RESIZED:   return "RESIZED ";
+    case DELETED:   return "DELETED ";
+    case CREATED:   return "CREATED ";
+    case RESTORED:  return "RESTORED";
+    default:        return "";
     }
 }
 

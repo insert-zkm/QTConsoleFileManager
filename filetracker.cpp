@@ -1,31 +1,31 @@
-#include "filemanager.h"
+#include "filetracker.h"
 
 
-FileManager::FileManager() {
+FileTracker::FileTracker() {
     timer = new QTimer(this);
 
-    connect(this, &FileManager::updated, &console, &Console::printFileState);
-    connect(timer, &QTimer::timeout, this, &FileManager::check_files);
+    connect(this, &FileTracker::updated, &console, &Console::printFileState);
+    connect(timer, &QTimer::timeout, this, &FileTracker::check_files);
 }
 
-FileManager::FileManager(const QString& file_path) : FileManager() {
+FileTracker::FileTracker(const QString& file_path) : FileTracker() {
     File fi(file_path);
     m_files.push_back(fi);
     show_tracking_files();
 }
 
-FileManager::FileManager(const QVector<QString>& files_path) : FileManager() {
+FileTracker::FileTracker(const QVector<QString>& files_path) : FileTracker() {
     for(int i = 0; i < files_path.size(); i++) {
         track_file(files_path[i]);
     }
     show_tracking_files();
 }
 
-FileManager::~FileManager() {
+FileTracker::~FileTracker() {
     console.print(("~FileManager"));
 }
 
-void FileManager::track_file(const QString &file_path) {
+void FileTracker::track_file(const QString &file_path) {
     File newFile(file_path);
     for(int i = 0; i < m_files.size(); i++) {
         if(newFile == m_files[i]) {
@@ -35,7 +35,7 @@ void FileManager::track_file(const QString &file_path) {
     m_files.push_back(newFile);
 }
 
-void FileManager::untrack_file(const QString &file_path) {
+void FileTracker::untrack_file(const QString &file_path) {
     for(int i = 0; i < m_files.size(); i++) {
         if(file_path == m_files[i].filePath()) {
             m_files.remove(i);
@@ -44,15 +44,15 @@ void FileManager::untrack_file(const QString &file_path) {
     }
 }
 
-void FileManager::start_tracking(const int msec) const {
+void FileTracker::start_tracking(const int msec) const {
     timer->start(msec);
 }
 
-void FileManager::stop_tracking() const {
+void FileTracker::stop_tracking() const {
     timer->stop();
 }
 
-void FileManager::show_tracking_files() const {
+void FileTracker::show_tracking_files() const {
     console.print("Tracking files: " + QString::number(m_files.size()));
     QString files_list;
     for(int i = 0; i < m_files.size(); i++) {
@@ -61,10 +61,10 @@ void FileManager::show_tracking_files() const {
     console.print(files_list);
 }
 
-void FileManager::check_files() {
+void FileTracker::check_files() {
     for(int i = 0; i < m_files.size(); i++) {
         FileState fs = m_files[i].update_and_get_state();
-        if(fs.state != State::STABLE) {
+        if(fs.state != State::UPTODATE) {
             emit updated(fs, m_files[i]);
         }
     }

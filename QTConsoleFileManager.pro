@@ -10,7 +10,7 @@ CONFIG -= app_bundle
 SOURCES += \
         consolewritter.cpp \
         file.cpp \
-        filemanager.cpp \
+        filetracker.cpp \
         logger.cpp \
         main.cpp
 
@@ -22,8 +22,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     consolewritter.h \
     file.h \
-    filemanager.h \
     filestate.h \
+    filetracker.h \
     logger.h
 
 DISTFILES += \

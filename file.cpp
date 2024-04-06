@@ -7,7 +7,7 @@ File::File(const QString& file_path) : QFileInfo(file_path) {
 
 FileState File::update_and_get_state() {
     FileState fs = {
-        State::STABLE,
+        State::UPTODATE,
         lastModified()
     };
     this->refresh();
@@ -21,7 +21,13 @@ FileState File::update_and_get_state() {
 
     if(m_old_existance != this->exists()) {
         if(this->exists()) {
+
             fs.state = State::CREATED;
+            QDateTime lm = lastModified();
+            QDateTime bt = birthTime();
+            if(lm != bt) {
+                fs.state = State::RESTORED;
+            }
             fs.updated_time = lastModified();
         } else {
             fs.state = State::DELETED;

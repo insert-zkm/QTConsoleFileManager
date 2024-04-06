@@ -1,5 +1,5 @@
-#ifndef FILEMANAGER_H
-#define FILEMANAGER_H
+#ifndef FILETRACKER_H
+#define FILETRACKER_H
 
 #include <QObject>
 #include <QVector>
@@ -10,7 +10,7 @@
 #include "file.h"
 #include "filestate.h"
 
-class FileManager : public QObject {
+class FileTracker : public QObject {
     Q_OBJECT;
 protected:
     QVector<File> m_files;
@@ -19,10 +19,10 @@ protected:
     Console console;
 
 public:
-    FileManager();
-    FileManager(const QString& file_path);
-    FileManager(const QVector<QString>& files_paths);
-    ~FileManager();
+    FileTracker();
+    FileTracker(const QString& file_path);
+    FileTracker(const QVector<QString>& files_paths);
+    ~FileTracker();
 
     void track_file(const QString& file_path);
     void untrack_file(const QString& file_path);
@@ -38,4 +38,4 @@ public slots:
 
 };
 
-#endif // FILEMANAGER_H
+#endif // FILETRACKER_H
