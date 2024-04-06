@@ -8,17 +8,9 @@ FileTracker::FileTracker() {
     connect(timer, &QTimer::timeout, this, &FileTracker::check_files);
 }
 
-FileTracker::FileTracker(const QString& file_path) : FileTracker() {
-    File fi(file_path);
-    m_files.push_back(fi);
-    show_tracking_files();
-}
-
-FileTracker::FileTracker(const QVector<QString>& files_path) : FileTracker() {
-    for(int i = 0; i < files_path.size(); i++) {
-        track_file(files_path[i]);
-    }
-    show_tracking_files();
+FileTracker &FileTracker::get_instance() {
+    static FileTracker ft_instance;
+    return ft_instance;
 }
 
 FileTracker::~FileTracker() {
@@ -33,6 +25,12 @@ void FileTracker::track_file(const QString &file_path) {
         }
     }
     m_files.push_back(newFile);
+}
+
+void FileTracker::track_file(const QVector<QString> &file_paths) {
+    for(int i = 0; i < file_paths.size(); i++) {
+        track_file(file_paths[i]);
+    }
 }
 
 void FileTracker::untrack_file(const QString &file_path) {
@@ -50,15 +48,6 @@ void FileTracker::start_tracking(const int msec) const {
 
 void FileTracker::stop_tracking() const {
     timer->stop();
-}
-
-void FileTracker::show_tracking_files() const {
-    console.print("Tracking files: " + QString::number(m_files.size()));
-    QString files_list;
-    for(int i = 0; i < m_files.size(); i++) {
-        files_list += "\t " + QString::number(i) + ". " + m_files[i].absoluteFilePath() + '\n';
-    }
-    console.print(files_list);
 }
 
 void FileTracker::check_files() {
