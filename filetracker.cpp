@@ -2,15 +2,19 @@
 
 
 FileTracker::FileTracker() {
-    timer = new QTimer(this);
-
     connect(this, &FileTracker::updated, &console, &Console::printFileState);
-    connect(timer, &QTimer::timeout, this, &FileTracker::check_files);
 }
 
 FileTracker &FileTracker::get_instance() {
     static FileTracker ft_instance;
     return ft_instance;
+}
+
+void FileTracker::timerEvent(QTimerEvent *event) {
+    if(timer_id == event->timerId()) {
+        check_files();
+    } else
+        QObject::timerEvent(event);
 }
 
 FileTracker::~FileTracker() {
@@ -42,12 +46,12 @@ void FileTracker::untrack_file(const QString &file_path) {
     }
 }
 
-void FileTracker::start_tracking(const int msec) const {
-    timer->start(msec);
+void FileTracker::start_tracking(const int msec) {
+    timer_id = QObject::startTimer(msec);
 }
 
-void FileTracker::stop_tracking() const {
-    timer->stop();
+void FileTracker::stop_tracking() {
+    QObject::killTimer(timer_id);
 }
 
 void FileTracker::check_files() {

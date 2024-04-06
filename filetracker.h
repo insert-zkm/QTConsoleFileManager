@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QVector>
-#include <QTimer>
+#include <QTimerEvent>
 #include <QTextStream>
 
 #include "consolewritter.h"
@@ -14,7 +14,7 @@ class FileTracker : public QObject {
     Q_OBJECT;
 protected:
     QVector<File> m_files;
-    QTimer* timer;
+    int timer_id;
     Console console;
 
     FileTracker();
@@ -28,11 +28,13 @@ public:
 
     static FileTracker& get_instance();
 
+    void timerEvent(QTimerEvent* event);
+
     void track_file(const QString& file_path);
     void track_file(const QVector<QString>& file_paths);
     void untrack_file(const QString& file_path);
-    void start_tracking(const int msec) const;
-    void stop_tracking() const;
+    void start_tracking(const int msec);
+    void stop_tracking();
 
 signals:
     void updated(const FileState& state, const File& file) const;
