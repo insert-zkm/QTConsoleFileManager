@@ -29,6 +29,7 @@ public:
     static FileTracker& get_instance();
 
     void timerEvent(QTimerEvent* event);
+    void check_files();
 
     void track_file(const QString& file_path);
     void track_file(const QVector<QString>& file_paths);
@@ -36,11 +37,9 @@ public:
     void start_tracking(const int msec);
     void stop_tracking();
 
+
 signals:
     void updated(const FileState& state, const File& file) const;
-
-public slots:
-    void check_files();
 
 };
 

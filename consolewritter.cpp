@@ -4,7 +4,7 @@ void Console::print(const QString &messege) const {
     QTextStream(stdout) << messege << Qt::endl;
 }
 
-void Console::printFileState(const FileState& fs, const File& file) const {
+void Console::print_file_state(const FileState& fs, const File& file) const {
     QString messege = QObject::tr("%1 | size: %2 B, exists: %3, last updated time: %4, file path: %5")
             .arg(get_state_text(fs.state))
             .arg(file.size())

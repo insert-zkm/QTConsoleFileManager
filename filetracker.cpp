@@ -17,9 +17,8 @@ void FileTracker::timerEvent(QTimerEvent *event) {
         QObject::timerEvent(event);
 }
 
-FileTracker::~FileTracker() {
-    console.print(("~FileManager"));
-}
+FileTracker::~FileTracker()
+{}
 
 void FileTracker::track_file(const QString &file_path) {
     File newFile(file_path);
@@ -62,23 +61,3 @@ void FileTracker::check_files() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

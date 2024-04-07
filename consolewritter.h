@@ -15,7 +15,7 @@ public:
     void print(const QString& messege) const;
 
 public slots:
-    void printFileState(const FileState& fs, const File& file) const;
+    void print_file_state(const FileState& fs, const File& file) const;
 };
 
 #endif // CONSOLEWRITTER_H
