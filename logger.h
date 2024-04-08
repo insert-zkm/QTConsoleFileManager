@@ -29,11 +29,14 @@ public:
         return l_instance;
     };
 
-    void log(const QString& messege);
+    void file_log(const QString& messege);
+    void console_log(const QString& messege) const;
+
     QString log_date() const;
 
 public slots:
-    void log_file_state(const FileState& fs, const File& file);
+    void file_log_file_state(const File& file);
+    void console_log_file_state(const File& file) const;
 
 };
 
