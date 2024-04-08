@@ -2,7 +2,7 @@
 
 
 FileTracker::FileTracker() : timer_id(0) {
-    connect(this, &FileTracker::updated, &console, &Console::print_file_state);
+    connect(this, &FileTracker::updated, &Console::get_instance(), &Console::print_file_state);
     connect(this, &FileTracker::updated, &Logger::get_instance(), &Logger::log_file_state);
 }
 

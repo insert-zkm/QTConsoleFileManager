@@ -16,7 +16,6 @@ class FileTracker : public QObject {
 protected:
     QVector<File> m_files;
     int timer_id;
-    Console console;
 
     FileTracker();
     ~FileTracker();
