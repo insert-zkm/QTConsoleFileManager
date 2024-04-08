@@ -48,7 +48,6 @@ class FileTracker <<Singleton>> {
     -- fields --
     # m_files : QVector<Files>
     # timer_id : int
-    # console : Console
 
     -- methods --
     - FileTracker()
