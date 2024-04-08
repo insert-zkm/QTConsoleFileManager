@@ -1,70 +1,53 @@
-@startuml
+@startuml my_proj
 skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
 left to right direction
 
 class QFileInfo {}
 class QObject {}
 
-class Console <<Singleton>> {
-    - Q_OBJECT
-    - Console()
-    - ~Console()
-
-    + get_instance() : Console&
-    + print(QString) : void
-
-    -- slots --
-    + printFileState(FileState, File) : void
-}
-
-class Logger <<Singleton>> {
-    - Q_OBJECT
+class Logger<Q_OBJECT> <<Singleton>> {
     # m_file : QFile
-    -- methods --
+        --
     - Logger()
     - ~Logger()
 
-    + get_instance() : Logger&
-    + log(QString) : void
+    {static} + get_instance() : Logger&
+    + file_log(msg : QString) : void
+    + console_log(msg : QString) : void
 
     -- slots --
-    +log_file_state(FileState, File) : void
+    +file_log_file_state(file : File) : void
+    +console_log_file_state(file : File) : void
 }
 
 class File {
-    -- fields --
     # m_old_size : qint
     # m_old_existance : bool
+        --
+    + File(file_path : QString)
 
-    -- methods --
-    + File()
-    + File(QString)
+        + refresh() : void
+        + get_state() : FileState
     + update_and_get_state() : FileState
-    + operator==(File) const : bool
+    + operator==(other : File&) : bool
 }
 
-class FileTracker <<Singleton>> {
-    - Q_OBJECT
-    -- fields --
-    # m_files : QVector<Files>
-    # timer_id : int
-
-    -- methods --
+class FileTracker<Q_OBJECT> <<Singleton>> {
     - FileTracker()
     - ~FileTracker()
 
+        {static} + get_instance() : FileTracker&
     + track_file(QString) : void
+    + track_file(QVector<QString>) : void
     + untrack_file(QString) : void
-    + start_tracking(int) const : void
-    + stop_tracking() const : void
-    + show_tacking_files() const : void
 
-    + timerEvent(QTimerEvent*) : void
-
+        -- slots --
     + check_files() : void
 
     -- signals --
-    + updated(FileState, File) const : void
+    + updated(file : File) : void
 }
 
 enum State {
@@ -76,23 +59,19 @@ enum State {
 }
 
 struct FileState {
-    + state : State
     + updated_time : QDateTime
 }
 
-FileTracker "0..1" *-- "*" File
+FileTracker *--- "*" File : "# m_files"
 
 Logger <.. File
-Logger <.. FileState
 
-Console <.. File
-Console <.. FileState
+FileState *-right- State : "+ state"
 
-FileState *-left- State
-File <.. FileState
+File -left-|> QFileInfo
+QObject <|-right- FileTracker
+QObject <|- Logger
 
-File <|-- QFileInfo
-FileTracker <|-left- QObject
-Console <|-- QObject
-Logger <|-- QObject
+File *--- FileState : "# m_state"
 @enduml
+
