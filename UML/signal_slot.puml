@@ -11,7 +11,7 @@ map FileTracker {
 }
 
 map Console {
-    printFileState=>SLOT
+    print_file_state=>SLOT
 }
 
 map Logger {
@@ -19,6 +19,6 @@ map Logger {
 }
 
 QTimer::timeout --> FileTracker::check_files
-FileTracker::updated --> Console::printFileState
+FileTracker::updated --> Console::print_file_state
 FileTracker::updated --> Logger::log_messege
 @enduml

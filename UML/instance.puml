@@ -2,16 +2,30 @@
 skinparam classAttributeIconSize 0
 
 class Console {
+    + Console()
     + print(QString) : void
 
     -- slots --
     + printFileState(FileState, File) : void
 }
 
+class Logger {
+    # m_file : QFile
+    -- methods --
+    - Logger()
+    + get_instance() : Logger&
+    + log(QString) : void
+
+    -- slots --
+    +log_file_state(FileState, File) : void
+
+
+}
+
 class File {
     -- fields --
-    # qint m_old_size
-    # bool m_old_existance
+    # m_old_size : qint
+    # m_old_existance : bool
 
     -- methods --
     + File()
@@ -22,22 +36,21 @@ class File {
 
 class FileTracker {
     -- fields --
-    # QVector<File> m_files
-    # QTimer* timer
-    # Console console
+    # m_files : QVector<Files>
+    # timer_id : int
+    # console : Console
 
     -- methods --
+    - FileTracker()
     + track_file(QString) : void
     + untrack_file(QString) : void
     + start_tracking(int) const : void
     + stop_tracking() const : void
     + show_tacking_files() const : void
+    + check_files() : void
 
     -- signals --
-    updated(FileState, File) const : void
-
-    -- slots --
-    check_files() : void
+    + updated(FileState, File) const : void
 }
 
 enum State {
@@ -49,9 +62,13 @@ enum State {
 }
 
 struct FileState {
-    + State state
-    + QDateTime updated_time
+    + state : State
+    + updated_time : QDateTime
 }
 
+File <.. FileState
+FileTracker <.. FileState
+Logger <.. FileState
+Console <.. FileState
 
 @enduml
