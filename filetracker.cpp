@@ -1,7 +1,7 @@
 #include "filetracker.h"
 
 
-FileTracker::FileTracker() {
+FileTracker::FileTracker() : timer_id(0) {
     connect(this, &FileTracker::updated, &console, &Console::print_file_state);
     connect(this, &FileTracker::updated, &Logger::get_instance(), &Logger::log_file_state);
 }
@@ -47,7 +47,12 @@ void FileTracker::untrack_file(const QString &file_path) {
 }
 
 void FileTracker::start_tracking(const int msec) {
-    timer_id = QObject::startTimer(msec);
+    if(!timer_id) {
+        timer_id = QObject::startTimer(msec);
+    } else {
+        killTimer(timer_id);
+        startTimer(msec);
+    }
 }
 
 void FileTracker::stop_tracking() {
