@@ -66,9 +66,15 @@ struct FileState {
     + updated_time : QDateTime
 }
 
-File <.. FileState
-FileTracker <.. FileState
+FileTracker "0..1" o-- "*" File
+FileTracker *-right- Console
+
+Logger <.. File
 Logger <.. FileState
+
+Console <.. File
 Console <.. FileState
 
+FileState *-left- State
+File <.. FileState
 @enduml
