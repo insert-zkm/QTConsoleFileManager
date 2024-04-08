@@ -1,21 +1,12 @@
 #include "filetracker.h"
 
 
-FileTracker::FileTracker() : timer_id(0) {
-    connect(this, &FileTracker::updated, &Console::get_instance(), &Console::print_file_state);
-    connect(this, &FileTracker::updated, &Logger::get_instance(), &Logger::log_file_state);
-}
+FileTracker::FileTracker()
+{}
 
 FileTracker &FileTracker::get_instance() {
     static FileTracker ft_instance;
     return ft_instance;
-}
-
-void FileTracker::timerEvent(QTimerEvent *event) {
-    if(timer_id == event->timerId()) {
-        check_files();
-    } else
-        QObject::timerEvent(event);
 }
 
 FileTracker::~FileTracker()
@@ -46,24 +37,11 @@ void FileTracker::untrack_file(const QString &file_path) {
     }
 }
 
-void FileTracker::start_tracking(const int msec) {
-    if(!timer_id) {
-        timer_id = QObject::startTimer(msec);
-    } else {
-        killTimer(timer_id);
-        startTimer(msec);
-    }
-}
-
-void FileTracker::stop_tracking() {
-    QObject::killTimer(timer_id);
-}
-
 void FileTracker::check_files() {
     for(int i = 0; i < m_files.size(); i++) {
         FileState fs = m_files[i].update_and_get_state();
         if(fs.state != State::UPTODATE) {
-            emit updated(fs, m_files[i]);
+            emit updated(m_files[i]);
         }
     }
 }

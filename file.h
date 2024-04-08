@@ -12,6 +12,7 @@ class File : public QFileInfo
 protected:
     qint64         m_old_size;
     bool           m_old_existance;
+    FileState      m_state;
 
 public:
     File() = delete;
@@ -19,7 +20,7 @@ public:
 
 
 
-
+    void refresh();
     /*!
      * \brief Get file info including updated is it or not
      *
@@ -30,6 +31,7 @@ public:
      *
      * \return FileState
      */
+    FileState get_state() const;
     FileState update_and_get_state();
 
 

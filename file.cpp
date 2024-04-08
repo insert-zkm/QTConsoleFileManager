@@ -3,18 +3,20 @@
 File::File(const QString& file_path) : QFileInfo(file_path) {
     m_old_size = this->size();
     m_old_existance = this->exists();
+    m_state.state = State::UPTODATE;
+    m_state.updated_time = lastModified();
 }
 
-FileState File::update_and_get_state() {
-    FileState fs = {
+void File::refresh() {
+    m_state = {
         State::UPTODATE,
         lastModified()
     };
-    this->refresh();
+    QFileInfo::refresh();
 
     if(m_old_size != this->size()) {
-        fs.state = State::RESIZED;
-        fs.updated_time = lastModified();
+        m_state.state = State::RESIZED;
+        m_state.updated_time = lastModified();
 
         m_old_size = this->size();
     }
@@ -22,22 +24,29 @@ FileState File::update_and_get_state() {
     if(m_old_existance != this->exists()) {
         if(this->exists()) {
 
-            fs.state = State::CREATED;
+            m_state.state = State::CREATED;
             QDateTime lm = lastModified();
             QDateTime bt = birthTime();
             if(lm != bt) {
-                fs.state = State::RESTORED;
+                m_state.state = State::RESTORED;
             }
-            fs.updated_time = lastModified();
+            m_state.updated_time = lastModified();
         } else {
-            fs.state = State::DELETED;
-            fs.updated_time = QDateTime::currentDateTime();
+            m_state.state = State::DELETED;
+            m_state.updated_time = QDateTime::currentDateTime();
         }
 
         m_old_existance = this->exists();
     }
+}
 
-    return fs;
+FileState File::get_state() const {
+    return  m_state;
+}
+
+FileState File::update_and_get_state() {
+    refresh();
+    return m_state;
 }
 
 bool File::operator==(const File &rhs) const {
