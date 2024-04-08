@@ -1,7 +1,12 @@
 @startuml
 skinparam classAttributeIconSize 0
+left to right direction
+
+class QFileInfo {}
+class QObject {}
 
 class Console {
+    - Q_OBJECT
     + Console()
     + print(QString) : void
 
@@ -9,7 +14,8 @@ class Console {
     + printFileState(FileState, File) : void
 }
 
-class Logger {
+class Logger <<Singleton>> {
+    - Q_OBJECT
     # m_file : QFile
     -- methods --
     - Logger()
@@ -18,8 +24,6 @@ class Logger {
 
     -- slots --
     +log_file_state(FileState, File) : void
-
-
 }
 
 class File {
@@ -34,7 +38,8 @@ class File {
     + operator==(File) const : bool
 }
 
-class FileTracker {
+class FileTracker <<Singleton>> {
+    - Q_OBJECT
     -- fields --
     # m_files : QVector<Files>
     # timer_id : int
@@ -47,6 +52,9 @@ class FileTracker {
     + start_tracking(int) const : void
     + stop_tracking() const : void
     + show_tacking_files() const : void
+
+    + timerEvent(QTimerEvent*) : void
+
     + check_files() : void
 
     -- signals --
@@ -66,7 +74,7 @@ struct FileState {
     + updated_time : QDateTime
 }
 
-FileTracker "0..1" o-- "*" File
+FileTracker "0..1" *-- "*" File
 FileTracker *-right- Console
 
 Logger <.. File
@@ -77,4 +85,9 @@ Console <.. FileState
 
 FileState *-left- State
 File <.. FileState
+
+File <|-- QFileInfo
+FileTracker <|-left- QObject
+Console <|-- QObject
+Logger <|-- QObject
 @enduml
