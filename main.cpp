@@ -1,5 +1,9 @@
 #include <QCoreApplication>
 
+#include <QFile>
+#include <QDir>
+#include <QDebug>
+
 #include "consolewritter.h"
 #include "filetracker.h"
 

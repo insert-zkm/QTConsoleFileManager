@@ -9,6 +9,7 @@
 #include "consolewritter.h"
 #include "file.h"
 #include "filestate.h"
+#include "logger.h"
 
 class FileTracker : public QObject {
     Q_OBJECT;
@@ -18,8 +19,6 @@ protected:
     Console console;
 
     FileTracker();
-    FileTracker(const QString& file_path);
-    FileTracker(const QVector<QString>& files_paths);
     ~FileTracker();
 
 public:

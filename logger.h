@@ -1,26 +1,39 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include <QDateTime>
 #include <QFile>
 #include <QObject>
 #include <QString>
+#include <QTextStream>
 
 #include "file.h"
 #include "filestate.h"
 
-class Logger : QObject
+class Logger : public QObject
 {
-Q_OBJECT
-
-public:
-    Logger() = delete;
-    Logger(const QString& file_name);
+    Q_OBJECT
+private:
+    Logger();
     ~Logger();
 
-    void log(const QString& messege) const;
+protected:
+    QFile m_file;
+
+public:
+    Logger(const Logger&) = delete;
+    void operator=(const Logger&) = delete;
+
+    inline static Logger& get_instance() {
+        static Logger l_instance;
+        return l_instance;
+    };
+
+    void log(const QString& messege);
+    QString log_date() const;
 
 public slots:
-    void log_file_state(const FileState& fs, const File& file) const;
+    void log_file_state(const FileState& fs, const File& file);
 
 };
 
