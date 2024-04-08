@@ -1,18 +1,20 @@
-@startuml
+@startuml gwe
 left to right direction
 
-map FileTracker {
-    updated(FileState, File)=>SIGNAL
+map QTimer {
+    timeout=>SIGNAL
 }
 
-map Console {
-    print_file_state(FileState, File)=>SLOT
+map FileTracker {
+    updated=>SIGNAL
+    check_files=>SLOT
 }
 
 map Logger {
-    log_messege(FileState, File)=>SLOT
+    file_log_file_state=>SLOT
+    console_log_file_state=>SLOT
 }
-
-FileTracker::updated ---> Console::print_file_state
-FileTracker::updated ---> Logger::log_messege
+QTimer::timeout --> FileTracker::check_files : void
+FileTracker::updated ---> Logger::file_log_file_state : "file : File"
+FileTracker::updated ---> Logger::console_log_file_state : "file : File"
 @enduml
