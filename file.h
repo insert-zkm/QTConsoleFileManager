@@ -21,6 +21,7 @@ public:
 
 
     void refresh();
+    FileState get_state() const;
     /*!
      * \brief Get file info including updated is it or not
      *
@@ -31,7 +32,6 @@ public:
      *
      * \return FileState
      */
-    FileState get_state() const;
     FileState update_and_get_state();
 
 
