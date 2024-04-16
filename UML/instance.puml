@@ -51,7 +51,7 @@ class FileTracker<Q_OBJECT> <<Singleton>> {
 }
 
 enum State {
-    STABLE,
+    UPTODATE,
     RESIZED,
     DELETED,
     CREATED,
