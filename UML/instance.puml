@@ -9,7 +9,7 @@ class QObject {}
 
 class Logger<Q_OBJECT> <<Singleton>> {
     # m_file : QFile
-        --
+    --
     - Logger()
     - ~Logger()
 
@@ -25,11 +25,11 @@ class Logger<Q_OBJECT> <<Singleton>> {
 class File {
     # m_old_size : qint
     # m_old_existance : bool
-        --
+    --
     + File(file_path : QString)
 
-        + refresh() : void
-        + get_state() : FileState
+    + refresh() : void
+    + get_state() : FileState
     + update_and_get_state() : FileState
     + operator==(other : File&) : bool
 }
@@ -38,12 +38,12 @@ class FileTracker<Q_OBJECT> <<Singleton>> {
     - FileTracker()
     - ~FileTracker()
 
-        {static} + get_instance() : FileTracker&
+    {static} + get_instance() : FileTracker&
     + track_file(QString) : void
     + track_file(QVector<QString>) : void
     + untrack_file(QString) : void
 
-        -- slots --
+    -- slots --
     + check_files() : void
 
     -- signals --
