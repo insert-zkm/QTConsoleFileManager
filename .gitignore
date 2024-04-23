@@ -52,3 +52,9 @@ compile_commands.json
 *creator.user*
 
 *_qmlcache.qrc
+
+# Project generated files
+*.log
+
+# Test folders and files
+test_files/
