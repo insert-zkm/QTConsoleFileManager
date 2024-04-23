@@ -62,7 +62,7 @@ struct FileState {
     + updated_time : QDateTime
 }
 
-FileTracker *--- "*" File : "# m_files"
+FileTracker ---> "*" File : "# m_files"
 
 Logger <.. File
 
