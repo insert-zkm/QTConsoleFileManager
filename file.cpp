@@ -25,11 +25,6 @@ void File::refresh() {
         if(this->exists()) {
 
             m_state.state = State::CREATED;
-            QDateTime lm = lastModified();
-            QDateTime bt = birthTime();
-            if(lm != bt) {
-                m_state.state = State::RESTORED;
-            }
             m_state.updated_time = lastModified();
         } else {
             m_state.state = State::DELETED;
