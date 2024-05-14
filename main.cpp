@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     FileTracker &fi = FileTracker::get_instance();
             fi.track_file({
-                   PROJECT_PATH "/test_files/test_file.txt",
-                   PROJECT_PATH "/test_files/test_file1.txt",
-                   PROJECT_PATH "/test_files/test_file2.txt"
+                   PROJECT_PATH "test_files/test_file.txt",
+                   PROJECT_PATH "test_files/test_file1.txt",
+                   PROJECT_PATH "test_files/test_file2.txt"
                });
 
     QTimer timer; 
