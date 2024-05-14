@@ -44,7 +44,7 @@ FileState File::update_and_get_state() {
 }
 
 bool File::operator==(const File &rhs) const {
-    return  static_cast<QFileInfo const &>(*this) == static_cast<QFileInfo const &>(rhs);
+    return  absoluteFilePath() == rhs.absoluteFilePath();
 }
 
 
