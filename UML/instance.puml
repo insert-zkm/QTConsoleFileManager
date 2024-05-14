@@ -54,8 +54,7 @@ enum State {
     UPTODATE,
     RESIZED,
     DELETED,
-    CREATED,
-    RESTORED
+    CREATED
 }
 
 struct FileState {

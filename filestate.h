@@ -7,8 +7,7 @@ enum State {
     UPTODATE,
     RESIZED,
     DELETED,
-    CREATED,
-    RESTORED
+    CREATED
 };
 
 struct FileState {
@@ -22,7 +21,6 @@ inline QString get_state_text(const State& st) {
     case RESIZED:   return "RESIZED ";
     case DELETED:   return "DELETED ";
     case CREATED:   return "CREATED ";
-    case RESTORED:  return "RESTORED";
     default:        return "";
     }
 }

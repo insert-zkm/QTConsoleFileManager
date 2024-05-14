@@ -17,7 +17,6 @@ void File::refresh() {
     if(m_old_size != this->size()) {
         m_state.state = State::RESIZED;
         m_state.updated_time = lastModified();
-
         m_old_size = this->size();
     }
 
