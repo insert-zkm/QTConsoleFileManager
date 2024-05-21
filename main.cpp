@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
     QTimer timer; 
     QObject::connect(&timer, &QTimer::timeout, &fi, &FileTracker::check_files);
     QObject::connect(&fi, &FileTracker::updated, &Logger::get_instance(), &Logger::console_log_file_state);
-    QObject::connect(&fi, &FileTracker::updated, &Logger::get_instance(), &Logger::file_log_file_state);
 
     timer.start(500);
 

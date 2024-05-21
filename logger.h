@@ -14,11 +14,8 @@ class Logger : public QObject
 {
     Q_OBJECT
 private:
-    Logger();
-    ~Logger();
-
-protected:
-    QFile m_file;
+    Logger() = default;
+    ~Logger() = default;
 
 public:
     Logger(const Logger&) = delete;
@@ -29,13 +26,11 @@ public:
         return l_instance;
     };
 
-    void file_log(const QString& messege);
     void console_log(const QString& messege) const;
 
     QString log_date() const;
 
 public slots:
-    void file_log_file_state(const File& file);
     void console_log_file_state(const File& file) const;
 
 };
