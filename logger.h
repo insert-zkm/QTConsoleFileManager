@@ -27,6 +27,7 @@ public:
     };
 
     void console_log(const QString& messege) const;
+    void log_head() const;
 
     QString log_date() const;
 
