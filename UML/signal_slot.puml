@@ -11,10 +11,8 @@ map FileTracker {
 }
 
 map Logger {
-    file_log_file_state=>SLOT
     console_log_file_state=>SLOT
 }
 QTimer::timeout --> FileTracker::check_files : void
-FileTracker::updated ---> Logger::file_log_file_state : "file : File"
 FileTracker::updated ---> Logger::console_log_file_state : "file : File"
 @enduml
