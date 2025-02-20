@@ -14,11 +14,11 @@ class Logger<Q_OBJECT> <<Singleton>> {
     - ~Logger()
 
     {static} + get_instance() : Logger&
-    + file_log(msg : QString) : void
+    + log_head() : void
     + console_log(msg : QString) : void
+    + log_date() : void
 
     -- slots --
-    +file_log_file_state(file : File) : void
     +console_log_file_state(file : File) : void
 }
 
