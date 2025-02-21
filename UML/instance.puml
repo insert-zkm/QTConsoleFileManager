@@ -35,6 +35,9 @@ class File {
 }
 
 class FileTracker<Q_OBJECT> <<Singleton>> {
+    # m_files: QVector<File>
+    --
+
     - FileTracker()
     - ~FileTracker()
 
@@ -61,7 +64,7 @@ struct FileState {
     + updated_time : QDateTime
 }
 
-FileTracker ---> "*" File : "# m_files"
+FileTracker ...> File
 
 Logger <.. File
 
@@ -73,4 +76,3 @@ QObject <|- Logger
 
 File *--- FileState : "# m_state"
 @enduml
-
